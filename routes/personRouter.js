@@ -2,7 +2,7 @@ const express = require('express');
 const { faker } = require('@faker-js/faker');
 
 const router = express.Router();
-
+// GET
 router.get('/', (req, res) => {
   const { size } = req.query;
   const defaultSize = size || 2;
@@ -20,13 +20,20 @@ router.get('/', (req, res) => {
   }
   res.json(persons);
 });
-
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   res.json({
     id,
     nombre: 'Rudy',
     apellido: 'Marca',
+  });
+});
+// POST
+router.post('/', (req, res) => {
+  const body = req.body;
+  res.json({
+    message: 'Created',
+    data: body,
   });
 });
 
