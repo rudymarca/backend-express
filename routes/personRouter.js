@@ -22,16 +22,22 @@ router.get('/', (req, res) => {
 });
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  res.json({
-    id,
-    nombre: 'Rudy',
-    apellido: 'Marca',
-  });
+  if (id === '999') {
+    res.status(404).json({
+      message: 'Not found',
+    });
+  } else {
+    res.status(202).json({
+      id,
+      nombre: 'Rudy',
+      apellido: 'Marca',
+    });
+  }
 });
 // POST
 router.post('/', (req, res) => {
   const body = req.body;
-  res.json({
+  res.status(201).json({
     message: 'Created',
     data: body,
   });
