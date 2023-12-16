@@ -36,5 +36,32 @@ router.post('/', (req, res) => {
     data: body,
   });
 });
-
+// PUT
+router.put('/:id', (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  res.json({
+    message: 'Updated All',
+    data: body,
+    id,
+  });
+});
+// PATCH
+router.patch('/:id', (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  res.json({
+    message: 'Updated partial',
+    data: body,
+    id,
+  });
+});
+// DELETE
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  res.json({
+    message: 'Deleted',
+    id,
+  });
+});
 module.exports = router;
