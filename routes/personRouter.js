@@ -1,38 +1,17 @@
 const express = require('express');
-const { faker } = require('@faker-js/faker');
+const PersonServices = require('../services/PersonServices');
 
+const service = new PersonServices();
 const router = express.Router();
 // GET
 router.get('/', (req, res) => {
-  const { size } = req.query;
-  const defaultSize = size || 2;
-  let persons = [];
-  for (let index = 0; index < defaultSize; index++) {
-    persons.push({
-      prefix: faker.person.prefix(),
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
-      fullName: faker.person.fullName(),
-      gender: faker.person.gender(),
-      avatar: faker.image.avatar(),
-      sex: faker.person.sex(),
-    });
-  }
-  res.json(persons);
+  const person = service.find();
+  res.json(person);
 });
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  if (id === '999') {
-    res.status(404).json({
-      message: 'Not found',
-    });
-  } else {
-    res.status(202).json({
-      id,
-      nombre: 'Rudy',
-      apellido: 'Marca',
-    });
-  }
+  const person = service.findOne(id);
+  res.json(person);
 });
 // POST
 router.post('/', (req, res) => {
