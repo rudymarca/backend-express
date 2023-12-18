@@ -44,6 +44,7 @@ class PersonServices {
     // return this.person;
   }
   async findOne(id) {
+    const name = this.getTotal();
     return this.person.find((item) => item.id === id);
   }
   async update(id, data) {

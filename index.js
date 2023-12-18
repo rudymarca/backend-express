@@ -1,5 +1,6 @@
 const express = require('express');
 const routerApi = require('./routes');
+const { logErrors, errorHandler } = require('./middlewares/errorHandler');
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.get('/one', (req, res) => {
 });
 
 routerApi(app);
+app.use(logErrors);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log('CORRIENDO EN ' + port);

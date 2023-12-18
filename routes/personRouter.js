@@ -8,10 +8,14 @@ router.get('/', async (req, res) => {
   const person = await service.find();
   res.json(person);
 });
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const person = await service.findOne(id);
-  res.json(person);
+router.get('/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const person = await service.findOne(id);
+    res.json(person);
+  } catch (error) {
+    next(error);
+  }
 });
 // POST
 router.post('/', async (req, res) => {
