@@ -4,18 +4,18 @@ const PersonServices = require('../services/PersonServices');
 const service = new PersonServices();
 const router = express.Router();
 // GET
-router.get('/', (req, res) => {
-  const person = service.find();
+router.get('/', async (req, res) => {
+  const person = await service.find();
   res.json(person);
 });
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   const { id } = req.params;
-  const person = service.findOne(id);
+  const person = await service.findOne(id);
   res.json(person);
 });
 // POST
-router.post('/', (req, res) => {
-  const newPerson = service.create(req.body);
+router.post('/', async (req, res) => {
+  const newPerson = await service.create(req.body);
   res.status(201).json(newPerson);
 });
 // PUT
@@ -29,16 +29,20 @@ router.put('/:id', (req, res) => {
   });
 });
 // PATCH
-router.patch('/:id', (req, res) => {
-  const { id } = req.params;
-  const body = req.body;
-  const updatePerson = service.update(id, body);
-  res.json(updatePerson);
+router.patch('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const updatePerson = await service.update(id, body);
+    res.json(updatePerson);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
 });
 // DELETE
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
   const { id } = req.params;
-  const deletePerson = service.delete(id);
+  const deletePerson = await service.delete(id);
   res.json(deletePerson);
 });
 module.exports = router;

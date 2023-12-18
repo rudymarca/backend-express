@@ -21,7 +21,7 @@ class PersonServices {
       });
     }
   }
-  create(data) {
+  async create(data) {
     const newPerson = {
       id: faker.string.uuid(),
       prefix: faker.person.prefix(),
@@ -36,12 +36,17 @@ class PersonServices {
     return newPerson;
   }
   find() {
-    return this.person;
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(this.person);
+      }, 5000);
+    });
+    // return this.person;
   }
-  findOne(id) {
+  async findOne(id) {
     return this.person.find((item) => item.id === id);
   }
-  update(id, data) {
+  async update(id, data) {
     const index = this.person.findIndex((item) => item.id === id);
 
     if (index === -1) {
@@ -56,7 +61,7 @@ class PersonServices {
     };
     return this.person[index];
   }
-  delete(id) {
+  async delete(id) {
     const index = this.person.findIndex((item) => item.id === id);
 
     if (index === -1) {
