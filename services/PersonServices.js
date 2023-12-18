@@ -32,6 +32,7 @@ class PersonServices {
       gender: faker.person.gender(),
       avatar: faker.image.avatar(),
       sex: faker.person.sex(),
+      isBlock: faker.datatype.boolean(),
     };
     this.person.push(newPerson);
     return newPerson;
