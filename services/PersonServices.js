@@ -1,5 +1,5 @@
 const { faker } = require('@faker-js/faker');
-
+const boom = require('@hapi/boom');
 class PersonServices {
   constructor() {
     this.person = [];
@@ -18,6 +18,7 @@ class PersonServices {
         gender: faker.person.gender(),
         avatar: faker.image.avatar(),
         sex: faker.person.sex(),
+        isBlock: faker.datatype.boolean(),
       });
     }
   }
@@ -44,14 +45,20 @@ class PersonServices {
     // return this.person;
   }
   async findOne(id) {
-    const name = this.getTotal();
-    return this.person.find((item) => item.id === id);
+    const person = this.person.find((item) => item.id === id);
+    if (!person) {
+      throw boom.notFound('Person not found');
+    }
+    if (person.isBlock) {
+      throw boom.conflict('Person is block');
+    }
+    return person;
   }
   async update(id, data) {
     const index = this.person.findIndex((item) => item.id === id);
 
     if (index === -1) {
-      throw new Error('Person not found');
+      throw boom.notFound('Person not found');
     }
 
     this.person[index] = {
@@ -66,7 +73,7 @@ class PersonServices {
     const index = this.person.findIndex((item) => item.id === id);
 
     if (index === -1) {
-      throw new Error('Person not found');
+      throw boom.notFound('Person not found');
     }
     this.person.splice(index, 1);
     return { id };
