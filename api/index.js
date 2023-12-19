@@ -4,7 +4,7 @@ const {
   logErrors,
   errorHandler,
   boomErrorHandler,
-} = require('./middlewares/errorHandler');
+} = require('../middlewares/errorHandler');
 const cors = require('cors');
 
 const app = express();
@@ -26,11 +26,11 @@ app.use(express.json());
 // app.use(cors(optionCors));
 app.use(cors());
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('HOLA MENSUALIDAD');
 });
 
-app.get('/one', (req, res) => {
+app.get('/api/one', (req, res) => {
   res.send('RUTA ONE');
 });
 
