@@ -5,12 +5,26 @@ const {
   errorHandler,
   boomErrorHandler,
 } = require('./middlewares/errorHandler');
+const cors = require('cors');
 
 const app = express();
 
 const port = 3000;
 
 app.use(express.json());
+
+// const whiteList = ['https://myapp.com'];
+// const optionCors = {
+//   origin: (origin, callback) => {
+//     if (whiteList.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('no permitido'));
+//     }
+//   },
+// };
+// app.use(cors(optionCors));
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('HOLA MENSUALIDAD');
