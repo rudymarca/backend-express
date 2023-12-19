@@ -41,7 +41,7 @@ class PersonServices {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(this.person);
-      }, 5000);
+      }, 2000);
     });
     // return this.person;
   }
